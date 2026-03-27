@@ -1,0 +1,8 @@
+sqb:
+  api-base: https://api.shouqianba.com
+  vendor-sn: your_vendor_sn
+  vendor-key: your_vendor_key
+  terminal-sn: your_terminal_sn
+  terminal-key: your_terminal_key
+  device-id: your_device_id
+  public-key-path: /opt/keys/sqb_public.pem

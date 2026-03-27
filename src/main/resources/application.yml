@@ -1,0 +1,11 @@
+sqb:
+  api-base: ${SQB_API_BASE:https://api.shouqianba.com}
+  vendor-sn: ${SQB_VENDOR_SN:}
+  vendor-key: ${SQB_VENDOR_KEY:}
+  terminal-sn: ${SQB_TERMINAL_SN:}
+  terminal-key: ${SQB_TERMINAL_KEY:}
+  device-id: ${SQB_DEVICE_ID:}
+  public-key-path: ${SQB_PUBLIC_KEY_PATH:}
+
+server:
+  port: ${SERVER_PORT:8080}
