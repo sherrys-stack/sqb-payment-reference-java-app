@@ -6,13 +6,16 @@ public enum OrderStatus {
     CREATED,
     PAYING,
     PAY_ERROR,
+    REFUND_ERROR,
     PAID,
     PAY_CANCELED,
     REFUNDED,
+    PARTIAL_REFUNDED,
+    CANCELED,
     CANCEL_ERROR,
     UNKNOWN;
 
-    private static final Set<OrderStatus> TERMINAL = Set.of(PAID, PAY_CANCELED, REFUNDED);
+    private static final Set<OrderStatus> TERMINAL = Set.of(PAID, PAY_CANCELED, REFUNDED, PARTIAL_REFUNDED, CANCELED);
 
     public boolean isTerminal() {
         return TERMINAL.contains(this);

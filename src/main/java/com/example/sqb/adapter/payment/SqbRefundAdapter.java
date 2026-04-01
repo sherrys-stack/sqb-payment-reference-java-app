@@ -16,7 +16,19 @@ public class SqbRefundAdapter {
     }
 
     public RefundResponse refund(RefundRequest request) {
+        validateRequest(request);
         TerminalCredential credential = credentialStore.get().orElseThrow(() -> new IllegalStateException("Terminal credential not initialized"));
         return httpClient.post("/upay/v2/refund", request, credential.terminalSn(), credential.terminalKey(), RefundResponse.class);
+    }
+
+    private void validateRequest(RefundRequest request) {
+        boolean hasSn = request != null && request.sn() != null && !request.sn().isBlank();
+        boolean hasClientSn = request != null && request.client_sn() != null && !request.client_sn().isBlank();
+        if (hasSn == hasClientSn) {
+            throw new IllegalArgumentException("Exactly one of sn or client_sn is required");
+        }
+        if (request == null || request.operator() == null || request.operator().isBlank()) {
+            throw new IllegalArgumentException("operator is required");
+        }
     }
 }

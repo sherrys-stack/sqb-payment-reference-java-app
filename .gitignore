@@ -1,6 +1,12 @@
 # Compiled class file
 *.class
 
+# macOS
+.DS_Store
+
+# Maven build
+/target/
+
 # Log file
 *.log
 

@@ -12,7 +12,7 @@ class SqbStatusParserTest {
     @Test
     void shouldParseTerminalPaidStatus() throws Exception {
         String json = """
-                {"result_code":"200","biz_response":{"result_code":"200","order_status":"PAID"}}
+                {"result_code":"200","biz_response":{"result_code":"PAY_SUCCESS","data":{"order_status":"PAID"}}}
                 """;
         ParsedResult result = parser.parse(mapper.readTree(json));
         assertTrue(result.communicationSuccess());
@@ -24,11 +24,22 @@ class SqbStatusParserTest {
     @Test
     void shouldParseNonTerminalCreatedStatus() throws Exception {
         String json = """
-                {"result_code":"200","biz_response":{"result_code":"200","order_status":"CREATED"}}
+                {"result_code":"200","biz_response":{"result_code":"PAY_SUCCESS","data":{"order_status":"CREATED"}}}
                 """;
         ParsedResult result = parser.parse(mapper.readTree(json));
         assertFalse(result.terminal());
         assertEquals(OrderStatus.CREATED, result.orderStatus());
+    }
+
+    @Test
+    void shouldHandlePendingBizResultCode() throws Exception {
+        String json = """
+                {"result_code":"200","biz_response":{"result_code":"PAY_IN_PROGRESS"}}
+                """;
+        ParsedResult result = parser.parse(mapper.readTree(json));
+        assertTrue(result.communicationSuccess());
+        assertFalse(result.businessSuccess());
+        assertFalse(result.terminal());
     }
 
     @Test
